@@ -8,7 +8,8 @@ const app = express()
 
 db.connect()
 
-app.use(express.urlencoded({ extended: true })) 
+//it allows server receive JSON format data
+app.use(express.json())
 
 app.use('/api', routes)
 

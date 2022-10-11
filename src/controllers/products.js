@@ -12,13 +12,34 @@ async function get(req, res) {
   // }
 
   // TERNARY IF
-  const obj = id ? { _id: id } : null 
+  const obj = id ? { _id: id } : null
 
   const products = await ProductsModel.find(obj)
 
   res.send(products)
 }
 
+async function post(req, res) {
+  const {
+    name,
+    brand,
+    price,
+  } = req.body
+
+ const product = new ProductsModel({
+    name, 
+    brand,
+    price,
+  })
+
+  product.save()
+
+  res.send({
+    message: 'success'
+  })
+}
+
 module.exports = {
   get,
+  post,
 }
