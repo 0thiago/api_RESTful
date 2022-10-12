@@ -42,26 +42,39 @@ async function post(req, res) {
 async function put(req, res) {
   const { id } = req.params
 
-  const product = await ProductsModel.findOneAndUpdate({ _id: id }, req.body, { new: true}) //id, updated data, if you want return the item updated
+  const product = await ProductsModel.findOneAndUpdate({ _id: id }, req.body, { new: true }) //id, updated data, if you want return the item updated
 
   res.send({
     message: 'success',
     product,
   })
 
-/* === Method updateOne (doesnt return the updated item)
-  const product = await ProductsModel.findOne({ _id: id })
+  /* === Method updateOne (doesnt return the updated item)
+    const product = await ProductsModel.findOne({ _id: id })
+  
+    await product.updateOne(req.body)
+  
+    res.send({
+      message: 'success',
+      product,
+    }) */
+}
 
-  await product.updateOne(req.body)
+async function remove(req, res) {
+  const { id } = req.params
+
+  const remove = await ProductsModel.deleteOne({ _id: id })
+
+  const message = remove.deletedCount ? 'success' : 'error'
 
   res.send({
-    message: 'success',
-    product,
-  }) */
+    message,
+  })
 }
 
 module.exports = {
   get,
   post,
   put,
+  remove,
 }
